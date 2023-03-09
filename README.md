@@ -1,26 +1,82 @@
-# Vision-based Fight Detection From Surveillance Cameras
+# Padel Video Classification
+Although the aim of this proyect is to be able to clasify padel tennis videos, since there is no publicly available padel tennis dataset to this day, the models are trained with the THETIS dataset and then applied to padel tennis videos. 
 
-A new fight dataset is shared through this repository. This dataset is benefited for developing a fight detection system which is aimed to use in surveillance cameras in public areas such as streets, underground stations and more. The details of the implementation and experiments are included in our paper "Vision-based Fight Detection From Surveillance Cameras" which is presented at IPTA 2019 conference. The project is developed based on the CNN + LSTM action recognition systems and is improved using a re-trained Xception CNN, Bi-LSTM and self-attention layer.
+## Tennis image classification using InceptionV3:
+Tennis image classification using a pretrained InceptionV3 base model.
+This is a guide on how to execute it in Google Colab
 
-## System Design
+Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
+This is a guide on how to execute it in Google Colab
 
-![system design](https://i.ibb.co/zbVMpBp/Fig2.jpg)
+1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
+2. Upload the THETIS zipfile to Google Drive
+3. Execute the preprocessing_thetis_non_seq.ipynb notebook
+4. Execute the training_thetis_non_seq.ipynb notebook
 
-The system works in two parts as feature extraction and classification. The dataset contains video samples in 2 seconds long. Since the CNN is 2D the data requires some modification. So, 5-10 frames are obtained from each video sequence by considering the total frame number in the sample in a uniform manner. The frames are resized according to the input size of CNN architecture. Then, each frame is sent to CNN for feature extraction. At the end of the process we had a feature vector for each frame. After, all of the features are sent into Bi-LSTM for sequence learning. LSTM systems can learn the relationship between the current element and the previous elements. Bi-LSTM systems also can find relations between current element and the future elements so it observes the sequence in both forward and backward way. In our case, the elements were frames and the system has learnt how the frames change according to the time. So that, it can recognize the action that is occuring in the sequence. The self-attention layer improves the given input by calculating the effects of each element on the current element. Thus, it learns for each element in the sequence, which elements must be given attention the most. 
+## Naive model:
+Tennis video classification using a pretrained InceptionV3 base model + calculating the average for each video.
+This is a guide on how to execute it in Google Colab
 
-## Surveillance Camera Fight Dataset
+Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
+This is a guide on how to execute it in Google Colab
 
-The dataset is collected from the Youtube videos that contains fight instances in it. Also, some non-fight sequences from regular surveillance camera videos are included.
+1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
+2. Upload the THETIS zipfile to Google Drive
+3. Execute the preprocessing_thetis_non_seq.ipynb notebook
+4. Execute the training_thetis_non_seq.ipynb to obtain the weights of the image classificator.
+5. Execute the naive_model.ipynb notebook
 
-- There are 300 videos in total as 150 fight + 150 non-fight
-- Videos are 2-second long
-- Only the fight related parts are included in the samples
+## Tennis video classification using InceptionV3 + LSTM:
 
-![sample-frames](https://i.ibb.co/BjMPGCS/Fig3.png)
+Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
+This is a guide on how to execute it in Google Colab
 
-Besides, since the task is detecting fights through surveillance cameras, the videos that have no background motion are preferred as samples. Also, various fight scenarios such as hitting with an object, kicking, fisting, wrestling are included. The environment in the samples also varies such as cafe, street, bus, and more. 
+1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
+2. Upload the THETIS zipfile to Google Drive
+3. Open the InceptionV3-LSTM.ipynb file is Google Collab
+4. Unzip the dataset
+5. Place the videos from the dataset in content/data/train and content/data/test folders. Each video type should have its own folder
 
-## Citation (Please cite this paper if you use the dataset)
+>	| data/train
+> >		| Forehand
+> >		| Backhand
+> >		...
+>	| data/test
+> >		| Forehand
+> >		| Backhand
+> >		...
 
-Ş. Aktı, G.A. Tataroğlu, H.K. Ekenel, “Vision-based Fight Detection from Surveillance Cameras”, IEEE/EURASIP 9th International Conference on Image Processing Theory, Tools and Applications, Istanbul, Turkey, November 2019.
+6. Clone the Github repository into Google Colab
+7. Extract files from video with script extract_files.py. Pass video files extenssion as a param
 
+`	$ python extract_files.py mp4`
+
+8. Check the data_file.csv and choose the acceptable sequence length of frames. It should be less or equal to lowest one if you want to process all videos in dataset. We recommend a length of 43 frames (avg -2*std).
+9. Extract sequence for each video with InceptionV3 and train LSTM. Run train.py script with sequence_length, class_limit, image_height, image_width args
+
+`	$ python predict.py 43 2 480 640`
+
+10. Save your best model file. (For example, lstm-features.hdf5)
+11. Evaluate your model using predict.py. It will generate an .xlsx with the confusion matrix and the predictions for each video.
+
+`	$ python train.py 75 2 720 1280`
+
+12. Use clasify.py script to clasify your video. Args sequence_length, class_limit, saved_model_file, video_filename
+
+`	$ python clasify.py 75 2 lstm-features.hdf5 video_file.mp4`
+
+The result will be placed in result.avi file.
+
+# Requirements
+
+Ignore if you are using Google Colab
+
+This code requires you have Keras 2 and TensorFlow 1 or greater installed. Please see the `requirements.txt` file. To ensure you're up to date, run:
+
+`pip install -r requirements.txt`
+
+You must also have `ffmpeg` installed in order to extract the video files.
+
+# Saved models
+
+The weights of the models trained by us is too big to upload to Github. If you wish to use it contact us
