@@ -51,8 +51,8 @@ def predict(data_type, seq_length, model, video_path, saved_model=None,
     print(filenames)
 
     # Format results and compute classification statistics
-    dataset_name = 'THETIS 2-classes'
-    class_indices = {"backhand": 0, "forehand": 1}
+    dataset_name = 'Fight detection'
+    class_indices = {"fight": 0, "no fight": 1}
     # class_indices = {"backhand": 0, "backhand2hands": 1, "backhand_slice": 2, "backhand_volley": 3, "flat_service": 4,
     #                  "forehand_flat": 5, "forehand_openstands": 6, "forehand_slice": 7, "forehand_volley": 8,
     #                  "kick_service": 9, "slice_service": 10, "smash": 11}
@@ -94,12 +94,12 @@ def main():
     model = 'lstm'
     saved_model = model_path  # None or weights file
     load_to_memory = False  # pre-load the sequences into memory
-    batch_size = 1
-    nb_epoch = 1
+    batch_size = 32
+    nb_epoch = 50
     data_type = 'features'
     image_shape = (image_height, image_width, 3)
 
-    extract_features(seq_length=seq_length, class_limit=class_limit, image_shape=image_shape, predict=True)
+    # extract_features(seq_length=seq_length, class_limit=class_limit, image_shape=image_shape, predict=True)
     predict(data_type, seq_length, model, video_path = False, saved_model=saved_model,
             class_limit=class_limit, image_shape=image_shape,
             load_to_memory=load_to_memory, batch_size=batch_size, nb_epoch=nb_epoch, train_test=train_test)

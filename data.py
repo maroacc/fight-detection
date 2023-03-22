@@ -188,9 +188,9 @@ class DataSet():
                     sequence = self.build_image_sequence(frames)
                 else:
                     # Get the sequence from disk.
-                    print("Get the sequence from disk")
-                    print(f"data type: {data_type}")
-                    print(f"sample: {sample}")
+                    # print("Get the sequence from disk")
+                    # print(f"data type: {data_type}")
+                    # print(f"sample: {sample}")
                     sequence = self.get_extracted_sequence(data_type, sample)
                     # print(f'data_type: {data_type}')
                     # print(f'sample: {sample}')

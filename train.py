@@ -8,6 +8,10 @@ from extract_features import extract_features
 import time
 import os.path
 import sys
+##
+import os
+from PIL import Image
+import pandas as pd
 
 def train(data_type, seq_length, model, saved_model=None,
           class_limit=None, image_shape=None,
@@ -107,12 +111,12 @@ def main():
     model = 'lstm'
     saved_model = None  # None or weights file
     load_to_memory = False # pre-load the sequences into memory
-    batch_size = 32
+    batch_size = 8
     nb_epoch = 50
     data_type = 'features'
     image_shape = (image_height, image_width, 3)
 
-    # extract_features(seq_length=seq_length, class_limit=class_limit, image_shape=image_shape)
+    extract_features(seq_length=seq_length, class_limit=class_limit, image_shape=image_shape)
     train(data_type, seq_length, model, saved_model=saved_model,
           class_limit=class_limit, image_shape=image_shape,
           load_to_memory=load_to_memory, batch_size=batch_size, nb_epoch=nb_epoch)
