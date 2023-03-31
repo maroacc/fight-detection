@@ -92,6 +92,16 @@ The next table presents the results for each model:
 | B     | 0.83      | 0.82      | 0.87            | 0.78         | 0.70     | 0.64     | 0.80           | 0.53        |
 | C     | 0.78      | 0.77      | 0.80            | 0.73         | 0.77     | 0.70     | 1.00           | 0.53        |
 
+Finally, the ROC curves of the 3 models were plotted:
+
+#### ROC Curve Model A
+![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_A.png)
+#### ROC Curve Model B
+![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_B.png)
+#### ROC Curve Model C
+![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_C.png)
+
+
 # Saved models
 
 The weights of the models trained by us is too big to upload to Github. If you wish to use it contact us
