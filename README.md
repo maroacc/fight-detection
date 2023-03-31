@@ -1,5 +1,15 @@
-# Padel Video Classification
-Although the aim of this proyect is to be able to clasify padel tennis videos, since there is no publicly available padel tennis dataset to this day, the models are trained with the THETIS dataset and then applied to padel tennis videos. 
+# Surveillance Camera Fight Detection
+This project aims to detect fights in surveillance camera videos using a CNN + LSTM model trained on the Fight Detection Surveillance Dataset. We used a pretrained CNN InceptionV3 as the backbone for our model and optimized the hyperparameters of the LSTM.
+
+## Description
+Surveillance cameras are a common feature in public places such as malls, public transport, and night clubs. However, monitoring these cameras in real-time is a daunting task, especially in large facilities with numerous cameras. This is where our project comes in. By automatically detecting fights in surveillance camera footage, our system can alert security personnel to violent incidents as soon as they occur.
+
+The model consists of a pretrained InceptionV3 CNN, followed by a 2-layer LSTM. The layers of the CNN were frozen due to the small dataset, and the hyperparameters of the LSTM were optimized. Various models with data augmentation were also tried to improve performance.
+
+## Installation
+To install the necessary dependencies for this project, run the following command:
+# Fight Detection Video Classification
+
 
 ## Tennis image classification using InceptionV3:
 Tennis image classification using a pretrained InceptionV3 base model.
