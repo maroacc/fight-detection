@@ -38,7 +38,7 @@ drive.mount('/content/drive')
 > >		nofi002.mp4
 > >		...
 
-3. Extract files from video with script extract_files.py. Pass video files extenssion as a param
+3. Extract images in `.jpg` format from video with script extract_files.py. Pass video files extenssion as a param
 
 `	$ python extract_files.py mp4`
 
@@ -95,11 +95,11 @@ The next table presents the results for each model:
 Finally, the ROC curves of the 3 models were plotted:
 
 #### ROC Curve Model A
-![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_A.png)
+![Model A ROC Curve](./images/ROC_A.png)
 #### ROC Curve Model B
-![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_B.png)
+![Model A ROC Curve](./images/ROC_B.png)
 #### ROC Curve Model C
-![Model A ROC Curve](https://github.com/maroacc/fight-detection/blob/master/images/ROC_C.png)
+![Model A ROC Curve](./images/ROC_C.png)
 
 
 # Saved models
