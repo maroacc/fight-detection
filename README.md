@@ -1,81 +1,96 @@
-# Padel Video Classification
-Although the aim of this proyect is to be able to clasify padel tennis videos, since there is no publicly available padel tennis dataset to this day, the models are trained with the THETIS dataset and then applied to padel tennis videos. 
+# Surveillance Camera Fight Detection
+This project aims to detect fights in surveillance camera videos using a CNN + LSTM model trained on the Fight Detection Surveillance Dataset. We used a pretrained CNN InceptionV3 as the backbone for our model and optimized the hyperparameters of the LSTM.
 
-## Tennis image classification using InceptionV3:
-Tennis image classification using a pretrained InceptionV3 base model.
+## Description
+Surveillance cameras are a common feature in public places such as malls, public transport, and night clubs. However, monitoring these cameras in real-time is a daunting task, especially in large facilities with numerous cameras. This is where our project comes in. By automatically detecting fights in surveillance camera footage, our system can alert security personnel to violent incidents as soon as they occur.
+
+The model consists of a pretrained InceptionV3 CNN, followed by a 2-layer LSTM. The layers of the CNN were frozen due to the small dataset, and the hyperparameters of the LSTM were optimized. Various models with data augmentation were also tried to improve performance. Part of the code used was replicated from https://github.com/SBoyNumber1/LSTM-video-classification and then modified to cater to this specific problem.
+
+## Installation
+To install the necessary dependencies for this project, run the following command:
+
+`pip install -r requirements.txt`
+
+We recommend using Google Colab to run this project, as that is where it was tested. If you choose to use Google Colab, you can skip the above step and simply upload the project files to a Google Drive Repository.
+
+
+## Fight detection using InceptionV3 + LSTM:
+### Training
+
+Surveillance Camera Fight Detection using a pretrained InceptionV3 base model + a LSTM architecture.
 This is a guide on how to execute it in Google Colab
 
-Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
-This is a guide on how to execute it in Google Colab
+1. Open the InceptionV3-LSTM.ipynb file in Google Collab
+2. Connect to your Google Drive repository by executing the following code:
 
-1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
-2. Upload the THETIS zipfile to Google Drive
-3. Execute the preprocessing_thetis_non_seq.ipynb notebook
-4. Execute the training_thetis_non_seq.ipynb notebook
+```
+from google.colab import drive
+drive.mount('/content/drive') 
+```
+2. Check that the data/data_og folder has the following structure
 
-## Naive model:
-Tennis video classification using a pretrained InceptionV3 base model + calculating the average for each video.
-This is a guide on how to execute it in Google Colab
-
-Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
-This is a guide on how to execute it in Google Colab
-
-1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
-2. Upload the THETIS zipfile to Google Drive
-3. Execute the preprocessing_thetis_non_seq.ipynb notebook
-4. Execute the training_thetis_non_seq.ipynb to obtain the weights of the image classificator.
-5. Execute the naive_model.ipynb notebook
-
-## Tennis video classification using InceptionV3 + LSTM:
-
-Tennis video classification using a pretrained InceptionV3 base model + a LSTM architecture.
-This is a guide on how to execute it in Google Colab
-
-1. Download the THETIS RGB dataset from <http://thetis.image.ece.ntua.gr/>
-2. Upload the THETIS zipfile to Google Drive
-3. Open the InceptionV3-LSTM.ipynb file is Google Collab
-4. Unzip the dataset
-5. Place the videos from the dataset in content/data/train and content/data/test folders. Each video type should have its own folder
-
->	| data/train
-> >		| Forehand
-> >		| Backhand
+>	fight
+> >		fi001.mp4
+> >		fi002.mp4
 > >		...
->	| data/test
-> >		| Forehand
-> >		| Backhand
+>	noFight
+> >		nofi001.mp4
+> >		nofi002.mp4
 > >		...
 
-6. Clone the Github repository into Google Colab
-7. Extract files from video with script extract_files.py. Pass video files extenssion as a param
+3. Extract files from video with script extract_files.py. Pass video files extenssion as a param
 
 `	$ python extract_files.py mp4`
 
-8. Check the data_file.csv and choose the acceptable sequence length of frames. It should be less or equal to lowest one if you want to process all videos in dataset. We recommend a length of 43 frames (avg -2*std).
-9. Extract sequence for each video with InceptionV3 and train LSTM. Run train.py script with sequence_length, class_limit, image_height, image_width args
 
-`	$ python predict.py 43 2 480 640`
 
-10. Save your best model file. (For example, lstm-features.hdf5)
+4. Check the data_file.csv and choose the acceptable sequence length of frames. It should be less or equal to lowest one if you want to process all videos in dataset. We recommend a length of 20 frames in order to use all the videos.
+
+5. Resize the videos to 299 x 299 pixels, the input shape of InceptionV3.
+9. Extract the sequence for each video with InceptionV3 and train the LSTM. Run train.py script with sequence_length, class_limit, image_height, image_width args
+
+`	$ python train.py 20 2 299 299`
+
+10. Check your best model in the data/checkpoints/ folder. It should be the latest saved.
 11. Evaluate your model using predict.py. It will generate an .xlsx with the confusion matrix and the predictions for each video.
 
-`	$ python train.py 75 2 720 1280`
+`	$ python predict.py 20 2 299 299`
 
 12. Use clasify.py script to clasify your video. Args sequence_length, class_limit, saved_model_file, video_filename
 
 `	$ python clasify.py 75 2 lstm-features.hdf5 video_file.mp4`
 
-The result will be placed in result.avi file.
+This will create a new video that shows the classification result in the root folder.
 
-# Requirements
+### Development
+The hyper parameters of the LSTM were optimized in order to reach the best performance. The following code was edited several times to change the number of neurons in the LSTM and Dense layers, as well as the Dropout.
 
-Ignore if you are using Google Colab
+```
+model = Sequential()
+        model.add(LSTM(2048, return_sequences=False,
+                       input_shape=self.input_shape,
+                       dropout=0.5))
+        model.add(Dense(512, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(self.nb_classes, activation='softmax'))
+```
+### Results
 
-This code requires you have Keras 2 and TensorFlow 1 or greater installed. Please see the `requirements.txt` file. To ensure you're up to date, run:
+Although many models were tested, only the 3 most interesting will be discussed. They are presented in the following table:
 
-`pip install -r requirements.txt`
+| Model | # LSTM neurons | # Dense_1 neurons | # Dense_2 neurons | # Dropout | Batch size |
+|-------|----------------|-------------------|-------------------|-----------|------------|
+| A     | 2048           | 512               | -                 | 0.5       | 8          |
+| B     | 128            | 64                | -                 | 0.5       | 8          |
+| C     | 128            | 64                | -                 | 0.5       | 1          |
 
-You must also have `ffmpeg` installed in order to extract the video files.
+The next table presents the results for each model:
+
+| Model | Train Acc | Train F-1 | Train Precision | Train Recall | Test Acc | Test F-1 | Test Precision | Test Recall |
+|-------|-----------|-----------|-----------------|--------------|----------|----------|----------------|-------------|
+| A     | 0.87      | 0.88      | 0.82            | 0.94         | 0.70     | 0.71     | 0.68           | 0.73        |
+| B     | 0.83      | 0.82      | 0.87            | 0.78         | 0.70     | 0.64     | 0.80           | 0.53        |
+| C     | 0.78      | 0.77      | 0.80            | 0.73         | 0.77     | 0.70     | 1.00           | 0.53        |
 
 # Saved models
 
