@@ -76,7 +76,7 @@ model = Sequential()
 ```
 ### Results
 
-Although many models were tested, only the 3 most interesting will be discussed. They are presented in the following table:
+Although many models were tested, only the 3 most interesting will be discussed. The parameters studied are a different size of the LSTM layer and a second fully connected dense layer. Apart of these cases, we try to add an additional layer completely connected to improve the summary of the characteristics. Different dropout values ​​have also been tested, but due to overlearning it suffered, it had to be increased to 0.5, with which the best results have been obtained. Finally, different batch sizes have been tested to try to explore different solutions forcing them to learn faster or slower. They are presented in the following table:
 
 | Model | # LSTM neurons | # Dense_1 neurons | # Dense_2 neurons | # Dropout | Batch size |
 |-------|----------------|-------------------|-------------------|-----------|------------|
