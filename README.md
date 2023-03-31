@@ -101,6 +101,10 @@ Finally, the ROC curves of the 3 models were plotted:
 #### ROC Curve Model C
 ![Model A ROC Curve](./images/ROC_C.png)
 
+#### Data Augmentation
+
+The size of our dataset is 300 videos, half of them from the fight class and the second half from noFight. The dataset has been separated into 210 videos for training, 30 videos for testing and 60 for validation. To increase the training set, flip transformations, rotation, change of light intensity, contrast and add noise were performed to increase the dataset size by a factor of 4. In this case the data augmentation process has been a little different than usual, since the same transformation had to be applied to all the frames of the same video.  
+
 
 # Saved models
 
