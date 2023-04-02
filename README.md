@@ -105,6 +105,16 @@ Finally, the ROC curves of the 3 models were plotted:
 
 The size of our dataset is 300 videos, half of them from the fight class and the second half from noFight. The dataset has been separated into 210 videos for training, 30 videos for testing and 60 for validation. To increase the training set, flip transformations, rotation, change of light intensity, contrast and add noise were performed to increase the dataset size by a factor of 4. In this case the data augmentation process has been a little different than usual, since the same transformation had to be applied to all the frames of the same video.  
 
+In general terms, we have been able to increase the accuracy between 5% and 10% compared to the results of not using data augmentation. In the case of model A (the best of all parameters tested):
+
+| Model | # LSTM neurons | # Dense_1 neurons | # Dense_2 neurons | # Dropout | Batch size |
+|-------|----------------|-------------------|-------------------|-----------|------------|
+| A     | 2048           | 512               | -                 | 0.5       | 8          |
+
+| Model | Train Acc | Train F-1 | Train Precision | Train Recall | Test Acc | Test F-1 | Test Precision | Test Recall |
+|-------|-----------|-----------|-----------------|--------------|----------|----------|----------------|-------------|
+| A     | 0.94      | 0.92      | 0.88            | 0.96         | 0.79     | 0.80     | 0.77           | 0.83        |
+
 
 # Saved models
 
