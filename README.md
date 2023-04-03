@@ -1,4 +1,5 @@
 # Surveillance Camera Fight Detection
+Proyecto Imagen Datos No Estructurados - 2ºMIT-MBD - Autores: María Jose Medina & Alejandro Rodríguez García
 This project aims to detect fights in surveillance camera videos using a CNN + LSTM model trained on the Fight Detection Surveillance Dataset. We used a pretrained CNN InceptionV3 as the backbone for our model and optimized the hyperparameters of the LSTM.
 
 ## Description
