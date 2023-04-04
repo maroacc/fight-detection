@@ -108,6 +108,12 @@ Finally, the ROC curves of the 3 models were plotted:
 #### ROC Curve Model C
 ![Model A ROC Curve](./images/ROC_C.png)
 
+Model C performed the best. The ROC curve is a graphical representation of the trade-off between true positive rates and false positive rates for different classification thresholds. The area under the ROC curve (AUC) is a measure of the model's overall performance, and Model C had the highest AUC value among the three models, indicating that it has a better balance between true positives and false positives.
+
+In some applications, we might find it useful to adjust the classification threshold to optimize the model's performance according to the specific needs of the task. For example, in a security system, we may want to detect all potential threats (fights), even if it comes at the cost of having some false alarms. In this case, a lower classification threshold may be appropriate to maximize the true positive rate, even if it also increases the false positive rate.
+
+In other applications, such as in a law enforcement scenario, it may be more important to reduce false alarms and ensure that the model is only detecting real fights. In this case, a higher classification threshold could be used to minimize the false positive rate, even if it leads to some missed fights. By understanding the trade-off between true positives and false positives and adjusting the classification threshold accordingly, we can optimize the model's performance for the specific application.
+
 #### Data Augmentation
 
 The size of our dataset is 300 videos, half of them from the fight class and the second half from noFight. The dataset has been separated into 210 videos for training, 30 videos for testing and 60 for validation. To increase the training set, flip transformations, rotation, change of light intensity, contrast and add noise were performed to increase the dataset size by a factor of 4. In this case the data augmentation process has been a little different than usual, since the same transformation had to be applied to all the frames of the same video.  
