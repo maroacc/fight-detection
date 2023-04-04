@@ -19,6 +19,8 @@ We recommend using Google Colab to run this project, as that is where it was tes
 
 
 ## Fight detection using InceptionV3 + LSTM:
+### Cross-validation
+The dataset composed of 300 videos. It is balanced with an equal number of samples for each class. To ensure the accuracy of the model, the dataset was split into three sets: a 70% training set, a 15% test set, and a 15% validation set. This split was done to allow the model to learn from the training set, test its accuracy on the test set, and validate its performance on the validation set. By utilizing this methodology, the resulting model should be capable of accurately classifying new, unseen videos as either fight or no fight with high precision.
 ### Training
 
 Surveillance Camera Fight Detection using a pretrained InceptionV3 base model + a LSTM architecture.
